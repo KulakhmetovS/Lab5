@@ -97,21 +97,43 @@ int main()
             {
                 if(graph[i][j] == 1)
                 {
-                    vert[0][k] = i;
-                    vert[1][k] = j;
-                    k++;
+                    if(ways > 1)
+                    {
+                        vert[0][k] = i;
+                        vert[1][k] = j;
+                        k++;
+                    }
+                    else if(ways == 1)
+                    {
+                        vert[0][0] = i;
+                        vert[0][1] = j;
+                        k++;
+                    }
                 }
             }
         }
 
-
-    for(j = 0; j < k; j++)
+    if(ways > 1)
     {
-        i = vert[0][j];
-        Graph[i][j] = 1;
-        i = vert[1][j];
-        Graph[i][j] = 1;
-        i = 0;
+        for(j = 0; j < k; j++)
+        {
+            i = vert[0][j];
+            Graph[i][j] = 1;
+            i = vert[1][j];
+            Graph[i][j] = 1;
+            i = 0;
+        }
+    }
+    else if(ways == 1)
+    {
+        for(j = 0; j < k; j++)
+        {
+            i = vert[0][j];
+            Graph[i][j] = 1;
+            i = vert[0][j + 1];
+            Graph[i][j] = 1;
+            i = 0;
+        }
     }
 
     for(i = 0; i < size; i++)
