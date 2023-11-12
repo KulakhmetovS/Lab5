@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 int main()
 {
@@ -72,12 +73,11 @@ int main()
         else if(count == (size - 1)) printf("Dominant vertex: %d\n", i+1);
     }
 
-    //free(graph);
-
 
     // <---------- Task 2. Creating the graph ---------->
 
-    int **Graph;
+    //int **Graph;
+    int Graph[size][ways];
     int **vert;
     int k = 0;
 
@@ -85,13 +85,21 @@ int main()
         for(i = 0; i < ways; i++)
             vert[i] = (int *)malloc(sizeof(int *) * 2);
 
-    Graph = (int **)(malloc(sizeof(int *) * ways));
+    /*Graph = (int **)(malloc(sizeof(int *) * ways));
+    for(i = 0; i < ways; i++)
+        Graph[i] = (int *)(malloc(sizeof(int *) * size));*/
+
     for(i = 0; i < size; i++)
-        Graph[i] = (int *)(malloc(sizeof(int *) * size));
+    {
+        for(j = 0; j < ways; j++)
+        {
+            Graph[i][j] = 0;
+        }
+    }
 
     printf("\nWays: %d\n", ways);
 
-        for(i = 0; i < size; i++)
+            for(i = 0; i < size; i++)
         {
             for(j = i; j < size; j++)
             {
@@ -143,6 +151,30 @@ int main()
         printf("\n");
     }
 
+    // Finding size of the graph
+    printf("Size of the graph: %d\n", graph_size);
+
+    // Finding isolated vertices
+    for(i = 0; i < size; i++)
+    {
+        count = 0;
+        for(j = 0; j < ways; j++)
+            if(Graph[i][j] == 1) count++;
+
+        if(count == 0) printf("Isolated vertex: %d\n", i+1);
+    }
+
+    // Finding end vertices
+    for(i = 0; i < size; i++)
+    {
+        count = 0;
+        for(j = 0; j < ways; j++)
+        {
+            if(Graph[i][j] == 1) count++;
+        }
+        if(count == 1) printf("End vertex: %d\n", i+1);
+        else if(count == (size - 1)) printf("Dominant vertex: %d\n", i+1);
+    }
 
 
     return 0;
